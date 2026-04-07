@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="hero-grid-tl" class="hero-grid-canvas hero-grid-tl"></canvas>
+    <canvas id="hero-grid-br" class="hero-grid-canvas hero-grid-br"></canvas>
+    <!-- Navigation -->
+    <nav>
+      <span class="nav-logo">dev.portfolio</span>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <button class="theme-btn" id="themeBtn">Light</button>
+      </div>
+    </nav>
+
+    <div class="hero" id="hero">
+      <div class="hero-eyebrow">Available for opportunities</div>
+      <h1>
+        Web developer in progress.<br /><span>Systems thinker</span> in
+        practice.
+      </h1>
+      <p>
+        I build things for the web — from marketing automation to full-stack
+        apps. Currently leveling up, one commit at a time.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" data-scroll="contact">
+          Let's Build Something
+        </button>
+        <button class="btn-secondary" data-scroll="projects">
+          View My Work
+        </button>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+      <div class="section-label">01 — About</div>
+      <div class="section-title">The person behind the code.</div>
+      <div class="section-divider"></div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I sit at the intersection of web development and marketing
+            technology — a space where logic meets persuasion and every line of
+            code has a conversion goal.
+          </p>
+          <p>
+            With hands-on experience in Salesforce Marketing Cloud, I understand
+            how data flows through systems and how to build tools that actually
+            serve the people using them.
+          </p>
+          <p>
+            I'm not the finished product — and I'm okay with that. I'm the kind
+            of developer who figures things out, documents the mess, and ships
+            something cleaner next time.
+          </p>
+          <div class="about-tags">
+            <span class="tag">Web Development</span>
+            <span class="tag">MarTech</span>
+            <span class="tag">SFMC</span>
+            <span class="tag">API Integration</span>
+            <span class="tag">Always Learning</span>
+          </div>
+        </div>
+
+        <div class="diamond-cluster" id="diamondCluster">
+          <div class="diamond diamond-center" id="diamondTrigger">
+            <div class="diamond-inner">
+              <span class="diamond-hint"></span>
+            </div>
+          </div>
+          <div class="diamond diamond-card" data-slot="tl">
+            <div class="diamond-inner">
+              <div class="hc-icon">⚡</div>
+              <div class="hc-title">Dev + Marketing</div>
+              <div class="hc-desc">
+                Bridging technical builds with real business outcomes.
+              </div>
+            </div>
+          </div>
+          <div class="diamond diamond-card" data-slot="tr">
+            <div class="diamond-inner">
+              <div class="hc-icon">☁</div>
+              <div class="hc-title">Salesforce MC</div>
+              <div class="hc-desc">
+                AMPscript, Journey Builder, data extensions, and beyond.
+              </div>
+            </div>
+          </div>
+          <div class="diamond diamond-card" data-slot="bl">
+            <div class="diamond-inner">
+              <div class="hc-icon">⬡</div>
+              <div class="hc-title">Builder Mindset</div>
+              <div class="hc-desc">
+                I learn by doing — projects first, then polish.
+              </div>
+            </div>
+          </div>
+          <div class="diamond diamond-card" data-slot="br">
+            <div class="diamond-inner">
+              <div class="hc-icon">✦</div>
+              <div class="hc-title">Passion for Design</div>
+              <div class="hc-desc">
+                Clean interfaces that feel as good as they look.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="section-label">02 — Work</div>
+      <div class="section-title">Things I've built.</div>
+      <div class="section-divider"></div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-num">01</div>
+          <div class="project-title">Omni Chat</div>
+          <div class="project-desc">
+            A unified messaging interface connecting multiple communication
+            channels into a single, clean UI.
+          </div>
+          <div class="project-stack">
+            <span class="stack-tag">React</span>
+            <span class="stack-tag">Node.js</span>
+            <span class="stack-tag">WebSockets</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+        <div class="project-card">
+          <div class="project-num">02</div>
+          <div class="project-title">Neural Network API</div>
+          <div class="project-desc">
+            A machine learning API with a companion frontend — trained,
+            deployed, and made actually usable.
+          </div>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">FastAPI</span>
+            <span class="stack-tag">React</span>
+            <span class="stack-tag">TensorFlow</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+        <div class="project-card">
+          <div class="project-num">03</div>
+          <div class="project-title">Portfolio Website</div>
+          <div class="project-desc">
+            This one. Built with a dark-mode-first approach, strong typographic
+            hierarchy, and restraint.
+          </div>
+          <div class="project-stack">
+            <span class="stack-tag">HTML/CSS</span>
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">Design Systems</span>
+          </div>
+          <a href="#" class="project-link">View Source →</a>
+        </div>
+        <div class="project-card">
+          <div class="project-num">04</div>
+          <div class="project-title">SFMC Email Campaigns</div>
+          <div class="project-desc">
+            End-to-end email campaigns built in Salesforce Marketing Cloud —
+            templated, personalized, and tracked.
+          </div>
+          <div class="project-stack">
+            <span class="stack-tag">AMPscript</span>
+            <span class="stack-tag">SFMC</span>
+            <span class="stack-tag">HTML Email</span>
+            <span class="stack-tag">SQL</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <div class="section-label">03 — Skills</div>
+      <div class="section-title">The toolkit.</div>
+      <div class="section-divider"></div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-title">Frontend</div>
+          <div class="skill-chips">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">React</span>
+            <span class="chip">Responsive Design</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Backend</div>
+          <div class="skill-chips">
+            <span class="chip">Node.js</span>
+            <span class="chip">Python</span>
+            <span class="chip">FastAPI</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">SQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">MarTech</div>
+          <div class="skill-chips">
+            <span class="chip">Salesforce MC</span>
+            <span class="chip">AMPscript</span>
+            <span class="chip">Journey Builder</span>
+            <span class="chip">HTML Email</span>
+            <span class="chip">Data Extensions</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Tools</div>
+          <div class="skill-chips">
+            <span class="chip">Git</span>
+            <span class="chip">GitHub</span>
+            <span class="chip">VS Code</span>
+            <span class="chip">Figma</span>
+            <span class="chip">Linux</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="section-label">04 — Contact</div>
+      <div class="section-title">Let's talk.</div>
+      <div class="section-divider"></div>
+      <div class="contact-box">
+        <div class="contact-headline">Open for what's next.</div>
+        <div class="contact-sub">
+          Whether it's a project, a collaboration, or a junior developer
+          opportunity — I'd like to hear about it.
+        </div>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:hello@example.com">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M2 7l10 7 10-7" />
+            </svg>
+            Email
+          </a>
+          <a
+            class="contact-link"
+            href="https://github.com/yourusername"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+              />
+            </svg>
+            GitHub
+          </a>
+          <a
+            class="contact-link"
+            href="https://linkedin.com/in/yourprofile"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+              />
+            </svg>
+            LinkedIn
+          </a>
+        </div>
+        <div class="contact-closing">
+          Open to freelance work, collaborations, and junior developer
+          opportunities.
+        </div>
+      </div>
+    </section>
+
+    <footer>Built with care and caffeine &nbsp;·&nbsp; 2025</footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>
