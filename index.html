@@ -191,50 +191,107 @@
       </div>
     </section>
 
-    <!-- Skills -->
+    <!-- Skills / Toolkit -->
     <section id="skills">
       <div class="section-label">03 — Skills</div>
       <div class="section-title">The toolkit.</div>
       <div class="section-divider"></div>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <div class="skill-group-title">Frontend</div>
-          <div class="skill-chips">
-            <span class="chip">HTML</span>
-            <span class="chip">CSS</span>
-            <span class="chip">JavaScript</span>
-            <span class="chip">React</span>
-            <span class="chip">Responsive Design</span>
+      <div class="toolkit-layout">
+        <!-- Diamond Cluster -->
+        <div class="toolkit-cluster" id="toolkitCluster">
+          <div class="toolkit-diamond" data-category="frontend">
+            <div class="toolkit-diamond-inner">FRONTEND</div>
+          </div>
+          <div class="toolkit-diamond" data-category="martech">
+            <div class="toolkit-diamond-inner">MARTECH</div>
+          </div>
+          <div class="toolkit-diamond" data-category="design">
+            <div class="toolkit-diamond-inner">DESIGN</div>
+          </div>
+          <div class="toolkit-diamond" data-category="backend">
+            <div class="toolkit-diamond-inner">BACKEND</div>
           </div>
         </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Backend</div>
-          <div class="skill-chips">
-            <span class="chip">Node.js</span>
-            <span class="chip">Python</span>
-            <span class="chip">FastAPI</span>
-            <span class="chip">REST APIs</span>
-            <span class="chip">SQL</span>
+
+        <!-- Info Panel -->
+        <div class="toolkit-info" id="toolkitInfo">
+          <div class="toolkit-prompt">
+            <span class="toolkit-prompt-close"
+              >CLICK THE
+              <span class="mini-diamond"></span>
+              <span class="toolkit-prompt-learn">TO LEARN MORE</span>
+            </span>
+            <!-- <span class="toolkit-prompt-learn">TO LEARN MORE</span> -->
           </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">MarTech</div>
-          <div class="skill-chips">
-            <span class="chip">Salesforce MC</span>
-            <span class="chip">AMPscript</span>
-            <span class="chip">Journey Builder</span>
-            <span class="chip">HTML Email</span>
-            <span class="chip">Data Extensions</span>
+
+          <!-- Frontend Content -->
+          <div class="toolkit-content" data-content="frontend">
+            <h3 class="toolkit-heading">THE START</h3>
+            <p class="toolkit-description">
+              I started my journey in web dev the same as everyone else. HTML,
+              CSS and Javascript. Honestly, one of the reason why I decided to
+              pursue this path is because I get to design things and see that I
+              could build something so beautiful
+            </p>
+            <div class="toolkit-chips">
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">React</span>
+              <span class="chip">Responsive Design</span>
+            </div>
           </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Tools</div>
-          <div class="skill-chips">
-            <span class="chip">Git</span>
-            <span class="chip">GitHub</span>
-            <span class="chip">VS Code</span>
-            <span class="chip">Figma</span>
-            <span class="chip">Linux</span>
+
+          <!-- Backend Content -->
+          <div class="toolkit-content" data-content="backend">
+            <h3 class="toolkit-heading">THE EXPLORATION</h3>
+            <p class="toolkit-description">
+              There comes a point in a career of a web developer where front end
+              knowledge would not be enough. Hence the attempt to learn how to
+              build the backend of any systems. You can say it was inevitable to
+              learn backend even if its just a little bit
+            </p>
+            <div class="toolkit-chips">
+              <span class="chip">Node.js</span>
+              <span class="chip">Python</span>
+              <span class="chip">FastAPI</span>
+              <span class="chip">REST APIs</span>
+              <span class="chip">SQL</span>
+            </div>
+          </div>
+
+          <!-- MarTech Content -->
+          <div class="toolkit-content" data-content="martech">
+            <h3 class="toolkit-heading">THE CAREER</h3>
+            <p class="toolkit-description">
+              After graduating college, I landed my first job as a Salesforce
+              Developer. Which was so far away from what I was expecting. But I
+              learned a lot with salesforce. You can say it build some of the
+              foundations I use when designing systems.
+            </p>
+            <div class="toolkit-chips">
+              <span class="chip">Salesforce Marketing Cloud</span>
+              <span class="chip">AMPscript</span>
+              <span class="chip">Journey Builder</span>
+              <span class="chip">HTML Email</span>
+              <span class="chip">Data Extensions</span>
+              <span class="chip">SQL</span>
+            </div>
+          </div>
+
+          <!-- Design Content -->
+          <div class="toolkit-content" data-content="design">
+            <h3 class="toolkit-heading">THE STRIVE</h3>
+            <p class="toolkit-description">
+              I have always find myself with a pen and paper in hand, always
+              doodling away my thoughts and imaginations. Design is always there
+              living at the back of mind, despite not studying art intensively,
+              I do believe I have a small knack for it.
+            </p>
+            <div class="toolkit-chips">
+              <span class="chip">Figma</span>
+              <span class="chip">Canva</span>
+            </div>
           </div>
         </div>
       </div>

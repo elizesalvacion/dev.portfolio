@@ -390,3 +390,109 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     });
   });
 })();
+
+// ── Toolkit Diamond Cluster ──
+(function () {
+  const ACCENT1 = "#05F2DB",
+    ACCENT2 = "#D8048D";
+  const GRID_SIZE = 25;
+
+  const toolkitInfo = document.getElementById("toolkitInfo");
+  const diamonds = document.querySelectorAll(".toolkit-diamond");
+  const contents = document.querySelectorAll(".toolkit-content");
+
+  if (!toolkitInfo || !diamonds.length) return;
+
+  let activeCategory = null;
+
+  // Create burst effect on click
+  function createBurst(x, y) {
+    const burstCanvas = document.getElementById("cyb-canvas");
+    if (!burstCanvas) return;
+
+    const ctx = burstCanvas.getContext("2d");
+    const gx = Math.floor(x / GRID_SIZE);
+    const gy = Math.floor(y / GRID_SIZE);
+    const now = performance.now();
+
+    // Create burst pattern
+    const burstPattern = [
+      [0, 0],
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+      [-1, -1],
+      [1, 1],
+      [-1, 1],
+      [1, -1],
+      [-2, 0],
+      [2, 0],
+      [0, -2],
+      [0, 2],
+    ];
+
+    burstPattern.forEach(([dx, dy], i) => {
+      setTimeout(() => {
+        const trail = [];
+        const event = new CustomEvent("addTrailCell", {
+          detail: {
+            gx: gx + dx,
+            gy: gy + dy,
+            born: performance.now(),
+            color: ACCENT2,
+          },
+        });
+        window.dispatchEvent(event);
+      }, i * 25);
+    });
+  }
+
+  diamonds.forEach((diamond) => {
+    diamond.addEventListener("click", function (e) {
+      const category = this.dataset.category;
+
+      // Create burst effect at click position
+      const rect = this.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      createBurst(centerX, centerY);
+
+      if (activeCategory === category) {
+        // Deactivate if clicking the same diamond
+        activeCategory = null;
+        diamonds.forEach((d) => d.classList.remove("active"));
+        contents.forEach((c) => c.classList.remove("active"));
+        toolkitInfo.classList.remove("has-content");
+      } else {
+        // Activate new diamond
+        activeCategory = category;
+        diamonds.forEach((d) => d.classList.remove("active"));
+        this.classList.add("active");
+
+        contents.forEach((c) => c.classList.remove("active"));
+        const targetContent = document.querySelector(
+          `.toolkit-content[data-content="${category}"]`,
+        );
+        if (targetContent) {
+          targetContent.classList.add("active");
+          toolkitInfo.classList.add("has-content");
+        }
+      }
+    });
+  });
+
+  // Allow closing by clicking on the info panel when content is shown
+  toolkitInfo.addEventListener("click", function (e) {
+    // Only close if clicking directly on the prompt area
+    if (
+      e.target.closest(".toolkit-prompt") &&
+      toolkitInfo.classList.contains("has-content")
+    ) {
+      activeCategory = null;
+      diamonds.forEach((d) => d.classList.remove("active"));
+      contents.forEach((c) => c.classList.remove("active"));
+      toolkitInfo.classList.remove("has-content");
+    }
+  });
+})();
