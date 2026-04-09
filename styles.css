@@ -557,25 +557,25 @@ section {
 
 /* Active positioning - moves out from center and rotates to square */
 .toolkit-diamond[data-category="frontend"].active {
-  margin-top: -280px;
+  margin-top: -240px;
   margin-left: -70px;
   transform: rotate(0deg) scale(1);
 }
 
 .toolkit-diamond[data-category="martech"].active {
   margin-top: -70px;
-  margin-left: -280px;
+  margin-left: -240px;
   transform: rotate(0deg) scale(1);
 }
 
 .toolkit-diamond[data-category="design"].active {
   margin-top: -70px;
-  margin-left: 140px;
+  margin-left: 90px;
   transform: rotate(0deg) scale(1);
 }
 
 .toolkit-diamond[data-category="backend"].active {
-  margin-top: 140px;
+  margin-top: 100px;
   margin-left: -70px;
   transform: rotate(0deg) scale(1);
 }
@@ -622,6 +622,15 @@ section {
   font-weight: 500;
   text-transform: uppercase;
 }
+.mini-diamond {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  background: rgba(5, 242, 219, 0.08);
+  border: 1px solid var(--accent1);
+  transform: rotate(45deg);
+}
 
 .toolkit-prompt-learn {
   font-size: 14px;
@@ -629,6 +638,7 @@ section {
   color: var(--accent2);
   font-weight: 500;
   text-transform: uppercase;
+  margin-left: 35px;
 }
 
 .toolkit-info.has-content .toolkit-prompt {
