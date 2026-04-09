@@ -273,8 +273,8 @@ section {
 
 .diamond {
   position: absolute;
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 120px;
   transform: rotate(45deg);
   cursor: pointer;
   transition: none;
@@ -468,7 +468,6 @@ section {
 }
 
 /* ── Toolkit ── */
-
 .toolkit-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -483,16 +482,6 @@ section {
   width: 400px;
   height: 400px;
   margin: 0 auto;
-}
-
-.mini-diamond {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  margin-left: 2px;
-  background: rgba(5, 242, 219, 0.08);
-  border: 1px solid var(--accent1);
-  transform: rotate(45deg);
 }
 
 .toolkit-diamond {
@@ -568,25 +557,25 @@ section {
 
 /* Active positioning - moves out from center and rotates to square */
 .toolkit-diamond[data-category="frontend"].active {
-  margin-top: -220px;
+  margin-top: -280px;
   margin-left: -70px;
   transform: rotate(0deg) scale(1);
 }
 
 .toolkit-diamond[data-category="martech"].active {
   margin-top: -70px;
-  margin-left: -220px;
+  margin-left: -280px;
   transform: rotate(0deg) scale(1);
 }
 
 .toolkit-diamond[data-category="design"].active {
   margin-top: -70px;
-  margin-left: 90px;
+  margin-left: 140px;
   transform: rotate(0deg) scale(1);
 }
 
 .toolkit-diamond[data-category="backend"].active {
-  margin-top: 90px;
+  margin-top: 140px;
   margin-left: -70px;
   transform: rotate(0deg) scale(1);
 }
@@ -639,7 +628,6 @@ section {
   letter-spacing: 0.12em;
   color: var(--accent2);
   font-weight: 500;
-  margin-left: 30px;
   text-transform: uppercase;
 }
 
@@ -690,12 +678,22 @@ section {
 
 .toolkit-chips .chip {
   font-size: 12px;
-  padding: 20px 20px;
+  padding: 5px 12px;
   border-radius: 5px;
   background: rgba(5, 242, 219, 0.08);
   color: var(--accent1);
   opacity: 1;
   border: 1px solid rgba(5, 242, 219, 0.2);
+}
+
+/* Content Square Badge - Hidden on desktop */
+.toolkit-content-square {
+  display: none;
+}
+
+/* Go Back Button - Hidden on desktop */
+.toolkit-back-btn {
+  display: none;
 }
 
 /* ── Contact ── */
@@ -783,6 +781,8 @@ footer {
     height: 120px;
   }
 }
+
+/* Mobile Toolkit Styles */
 @media (max-width: 640px) {
   nav {
     padding: 0 1rem;
@@ -803,28 +803,221 @@ footer {
   .projects-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Mobile Toolkit Layout */
+  .toolkit-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    position: relative;
+  }
+
+  /* Toolkit Prompt - Move to top on mobile */
+  .toolkit-prompt {
+    order: -2;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .toolkit-prompt-close::after {
+    content: " ◆";
+    color: var(--accent1);
+    margin: 0 0.3rem;
+  }
+
+  .toolkit-prompt-learn {
+    margin-left: 0;
+  }
+
+  /* Cluster ordering */
   .toolkit-cluster {
-    width: 300px;
-    height: 300px;
+    order: -1;
+    width: 280px;
+    height: 280px;
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
   }
+
+  /* Hide cluster when content is active */
+  .toolkit-layout.mobile-content-active .toolkit-cluster {
+    opacity: 0;
+    transform: scale(0.2);
+    pointer-events: none;
+    position: absolute;
+  }
+
+  /* Hide prompt when content is active */
+  .toolkit-layout.mobile-content-active .toolkit-prompt {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
   .toolkit-diamond {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
   }
+
   .toolkit-diamond-inner {
-    font-size: 10px;
+    font-size: 9px;
+  }
+
+  /* Adjust diamond positions for smaller mobile cluster */
+  .toolkit-diamond[data-category="frontend"] {
+    margin-top: -125px;
+    margin-left: -45px;
+  }
+
+  .toolkit-diamond[data-category="martech"] {
+    margin-top: -45px;
+    margin-left: -120px;
+  }
+
+  .toolkit-diamond[data-category="design"] {
+    margin-top: -45px;
+    margin-left: 30px;
+  }
+
+  .toolkit-diamond[data-category="backend"] {
+    margin-top: 30px;
+    margin-left: -45px;
+  }
+
+  /* Info Panel - Mobile */
+  .toolkit-info {
+    width: 100%;
+    min-height: 0;
+    order: 1;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(40px) scale(0.95);
+    transition:
+      opacity 0.6s cubic-bezier(0.77, 0, 0.18, 1),
+      transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+  .toolkit-layout.mobile-content-active .toolkit-info {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Content sections */
+  .toolkit-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  .toolkit-content.active {
+    animation: mobile-content-in 0.6s cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+
+  /* Square badge at top */
+  .toolkit-content-square {
+    width: 120px;
+    height: 120px;
+
+    background: rgba(4, 159, 216, 0.08);
+    border: 1px solid var(--accent2);
+    border-radius: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent1);
+    margin-bottom: 1.5rem;
+    transform: rotate(0deg);
+  }
+
+  .toolkit-heading {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .toolkit-description {
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .toolkit-chips {
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Go Back Button */
+  .toolkit-back-btn {
+    background: transparent;
+    color: var(--accent2);
+    border: 1px solid var(--accent2);
+
+    padding: 0.7rem 2rem;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+    margin-top: auto;
+  }
+
+  .toolkit-back-btn:active {
+    background: var(--accent2);
+    color: var(--bg);
+  }
+
+  .back-arrow {
+    font-size: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  .toolkit-back-btn:hover .back-arrow {
+    transform: translateX(-3px);
+  }
+
+  @keyframes mobile-content-in {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 }
+
 @media (max-width: 480px) {
   .nav-links {
     gap: 0.75rem;
   }
   .toolkit-cluster {
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
   }
   .toolkit-diamond {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
+  }
+  .toolkit-diamond-inner {
+    font-size: 8px;
   }
 }

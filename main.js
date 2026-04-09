@@ -245,6 +245,14 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   });
   document.body.appendChild(ring);
 
+  const isTouchDevice =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  if (isTouchDevice) {
+    document.documentElement.style.cursor = "auto";
+    cursor.style.display = "none";
+    ring.style.display = "none";
+  }
+
   // Trail canvas
   const canvas = document.createElement("canvas");
   canvas.id = "cyb-canvas";
@@ -362,14 +370,16 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     }
   });
 
-  document.addEventListener("mouseleave", () => {
-    cursor.style.opacity = "0";
-    ring.style.opacity = "0";
-  });
-  document.addEventListener("mouseenter", () => {
-    cursor.style.opacity = "1";
-    ring.style.opacity = "0.4";
-  });
+  if (!isTouchDevice) {
+    document.addEventListener("mouseleave", () => {
+      cursor.style.opacity = "0";
+      ring.style.opacity = "0";
+    });
+    document.addEventListener("mouseenter", () => {
+      cursor.style.opacity = "1";
+      ring.style.opacity = "0.4";
+    });
+  }
 
   window.addEventListener("click", (e) => {
     const cx = Math.floor(e.clientX / GRID_SIZE);
@@ -397,13 +407,23 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     ACCENT2 = "#D8048D";
   const GRID_SIZE = 25;
 
+  const toolkitLayout = document.querySelector(".toolkit-layout");
   const toolkitInfo = document.getElementById("toolkitInfo");
   const diamonds = document.querySelectorAll(".toolkit-diamond");
   const contents = document.querySelectorAll(".toolkit-content");
+  const backButtons = document.querySelectorAll(".toolkit-back-btn");
 
   if (!toolkitInfo || !diamonds.length) return;
 
   let activeCategory = null;
+  let isMobile = window.innerWidth <= 640;
+
+  // Check if mobile view
+  function checkMobile() {
+    isMobile = window.innerWidth <= 640;
+  }
+
+  window.addEventListener("resize", checkMobile);
 
   // Create burst effect on click
   function createBurst(x, y) {
@@ -458,14 +478,8 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
       const centerY = rect.top + rect.height / 2;
       createBurst(centerX, centerY);
 
-      if (activeCategory === category) {
-        // Deactivate if clicking the same diamond
-        activeCategory = null;
-        diamonds.forEach((d) => d.classList.remove("active"));
-        contents.forEach((c) => c.classList.remove("active"));
-        toolkitInfo.classList.remove("has-content");
-      } else {
-        // Activate new diamond
+      if (isMobile) {
+        // Mobile behavior: Show content, hide cluster
         activeCategory = category;
         diamonds.forEach((d) => d.classList.remove("active"));
         this.classList.add("active");
@@ -477,15 +491,54 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
         if (targetContent) {
           targetContent.classList.add("active");
           toolkitInfo.classList.add("has-content");
+          toolkitLayout.classList.add("mobile-content-active");
+        }
+      } else {
+        // Desktop behavior: Toggle diamond and content
+        if (activeCategory === category) {
+          // Deactivate if clicking the same diamond
+          activeCategory = null;
+          diamonds.forEach((d) => d.classList.remove("active"));
+          contents.forEach((c) => c.classList.remove("active"));
+          toolkitInfo.classList.remove("has-content");
+        } else {
+          // Activate new diamond
+          activeCategory = category;
+          diamonds.forEach((d) => d.classList.remove("active"));
+          this.classList.add("active");
+
+          contents.forEach((c) => c.classList.remove("active"));
+          const targetContent = document.querySelector(
+            `.toolkit-content[data-content="${category}"]`,
+          );
+          if (targetContent) {
+            targetContent.classList.add("active");
+            toolkitInfo.classList.add("has-content");
+          }
         }
       }
     });
   });
 
-  // Allow closing by clicking on the info panel when content is shown
+  // Go Back button functionality (mobile only)
+  backButtons.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+
+      // Reset everything
+      activeCategory = null;
+      diamonds.forEach((d) => d.classList.remove("active"));
+      contents.forEach((c) => c.classList.remove("active"));
+      toolkitInfo.classList.remove("has-content");
+      toolkitLayout.classList.remove("mobile-content-active");
+    });
+  });
+
+  // Allow closing by clicking on the info panel when content is shown (desktop only)
   toolkitInfo.addEventListener("click", function (e) {
-    // Only close if clicking directly on the prompt area
+    // Only close if clicking directly on the prompt area and on desktop
     if (
+      !isMobile &&
       e.target.closest(".toolkit-prompt") &&
       toolkitInfo.classList.contains("has-content")
     ) {
