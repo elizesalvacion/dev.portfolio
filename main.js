@@ -552,3 +552,87 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     }
   });
 })();
+
+// ── Projects Carousel ──
+(function () {
+  const carousel = document.getElementById("projectsCarousel");
+  const leftBtn = document.getElementById("carouselLeft");
+  const rightBtn = document.getElementById("carouselRight");
+  const cards = document.querySelectorAll(".project-card");
+
+  if (!carousel || !leftBtn || !rightBtn || cards.length === 0) return;
+
+  let currentCenter = 0;
+  const totalCards = cards.length;
+
+  function updateCenterCard() {
+    cards.forEach((card, index) => {
+      card.classList.remove("center");
+      if (index === currentCenter) {
+        card.classList.add("center");
+      }
+    });
+  }
+
+  function scrollToCard(index) {
+    const card = cards[index];
+    if (card) {
+      const cardWidth = card.offsetWidth;
+      const gap = 24; // 1.5rem
+      const scrollPosition =
+        (cardWidth + gap) * index - carousel.offsetWidth / 2 + cardWidth / 2;
+      carousel.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+      currentCenter = index;
+      updateCenterCard();
+    }
+  }
+
+  leftBtn.addEventListener("click", () => {
+    const nextIndex = currentCenter - 1;
+    // Loop to end if at beginning
+    scrollToCard(nextIndex < 0 ? totalCards - 1 : nextIndex);
+  });
+
+  rightBtn.addEventListener("click", () => {
+    const nextIndex = currentCenter + 1;
+    // Loop to beginning if at end
+    scrollToCard(nextIndex >= totalCards ? 0 : nextIndex);
+  });
+
+  // Mouse wheel horizontal scroll
+  carousel.addEventListener("wheel", (e) => {
+    if (e.deltaY !== 0) {
+      e.preventDefault();
+      carousel.scrollLeft += e.deltaY;
+
+      // Update center card based on scroll position
+      const cardWidth = cards[0].offsetWidth;
+      const gap = 24;
+      const scrollCenter = carousel.scrollLeft + carousel.offsetWidth / 2;
+      const newCenter = Math.round(scrollCenter / (cardWidth + gap));
+      if (
+        newCenter !== currentCenter &&
+        newCenter >= 0 &&
+        newCenter < totalCards
+      ) {
+        currentCenter = newCenter;
+        updateCenterCard();
+      }
+    }
+  });
+
+  // Click card to center it
+  cards.forEach((card, index) => {
+    card.addEventListener("click", (e) => {
+      if (!e.target.closest(".project-link")) {
+        scrollToCard(index);
+      }
+    });
+  });
+
+  // Initialize - start with first card centered
+  scrollToCard(currentCenter);
+})();

@@ -123,69 +123,109 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects">
+    <section id="projects" class="projects-section">
       <div class="section-label">02 — Work</div>
       <div class="section-title">Things I've built.</div>
       <div class="section-divider"></div>
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-num">01</div>
-          <div class="project-title">Omni Chat</div>
-          <div class="project-desc">
-            A unified messaging interface connecting multiple communication
-            channels into a single, clean UI.
+
+      <div class="projects-carousel-wrapper">
+        <button class="carousel-nav carousel-nav-left" id="carouselLeft">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 18l-6-6 6-6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+
+        <div class="projects-carousel" id="projectsCarousel">
+          <div class="project-card" data-index="0">
+            <div class="project-image">
+              <!-- Placeholder for project image -->
+            </div>
+            <div class="project-content">
+              <div class="project-num">01</div>
+              <div class="project-title">Omni Chat</div>
+              <div class="project-desc">
+                A unified messaging interface connecting multiple communication
+                channels into a single, clean UI.
+              </div>
+              <div class="project-stack">
+                <span class="stack-tag">React</span>
+                <span class="stack-tag">Node.js</span>
+                <span class="stack-tag">WebSockets</span>
+              </div>
+              <a href="#" class="project-link">View Project →</a>
+            </div>
           </div>
-          <div class="project-stack">
-            <span class="stack-tag">React</span>
-            <span class="stack-tag">Node.js</span>
-            <span class="stack-tag">WebSockets</span>
+
+          <div class="project-card" data-index="1">
+            <div class="project-image"></div>
+            <div class="project-content">
+              <div class="project-num">02</div>
+              <div class="project-title">Neural Network API</div>
+              <div class="project-desc">
+                A machine learning API with a companion frontend — trained,
+                deployed, and made actually usable.
+              </div>
+              <div class="project-stack">
+                <span class="stack-tag">Python</span>
+                <span class="stack-tag">FastAPI</span>
+                <span class="stack-tag">React</span>
+                <span class="stack-tag">TensorFlow</span>
+              </div>
+              <a href="#" class="project-link">View Project →</a>
+            </div>
           </div>
-          <a href="#" class="project-link">View Project →</a>
+
+          <div class="project-card center" data-index="2">
+            <div class="project-image"></div>
+            <div class="project-content">
+              <div class="project-num">03</div>
+              <div class="project-title">Portfolio Website</div>
+              <div class="project-desc">
+                This one. Built with a dark-mode-first approach, strong
+                typographic hierarchy, and restraint.
+              </div>
+              <div class="project-stack">
+                <span class="stack-tag">HTML/CSS</span>
+                <span class="stack-tag">JavaScript</span>
+                <span class="stack-tag">Design Systems</span>
+              </div>
+              <a href="#" class="project-link">View Source →</a>
+            </div>
+          </div>
+
+          <div class="project-card" data-index="3">
+            <div class="project-image"></div>
+            <div class="project-content">
+              <div class="project-num">04</div>
+              <div class="project-title">SFMC Email Campaigns</div>
+              <div class="project-desc">
+                End-to-end email campaigns built in Salesforce Marketing Cloud —
+                templated, personalized, and tracked.
+              </div>
+              <div class="project-stack">
+                <span class="stack-tag">AMPscript</span>
+                <span class="stack-tag">SFMC</span>
+                <span class="stack-tag">HTML Email</span>
+                <span class="stack-tag">SQL</span>
+              </div>
+              <a href="#" class="project-link">View Project →</a>
+            </div>
+          </div>
         </div>
-        <div class="project-card">
-          <div class="project-num">02</div>
-          <div class="project-title">Neural Network API</div>
-          <div class="project-desc">
-            A machine learning API with a companion frontend — trained,
-            deployed, and made actually usable.
-          </div>
-          <div class="project-stack">
-            <span class="stack-tag">Python</span>
-            <span class="stack-tag">FastAPI</span>
-            <span class="stack-tag">React</span>
-            <span class="stack-tag">TensorFlow</span>
-          </div>
-          <a href="#" class="project-link">View Project →</a>
-        </div>
-        <div class="project-card">
-          <div class="project-num">03</div>
-          <div class="project-title">Portfolio Website</div>
-          <div class="project-desc">
-            This one. Built with a dark-mode-first approach, strong typographic
-            hierarchy, and restraint.
-          </div>
-          <div class="project-stack">
-            <span class="stack-tag">HTML/CSS</span>
-            <span class="stack-tag">JavaScript</span>
-            <span class="stack-tag">Design Systems</span>
-          </div>
-          <a href="#" class="project-link">View Source →</a>
-        </div>
-        <div class="project-card">
-          <div class="project-num">04</div>
-          <div class="project-title">SFMC Email Campaigns</div>
-          <div class="project-desc">
-            End-to-end email campaigns built in Salesforce Marketing Cloud —
-            templated, personalized, and tracked.
-          </div>
-          <div class="project-stack">
-            <span class="stack-tag">AMPscript</span>
-            <span class="stack-tag">SFMC</span>
-            <span class="stack-tag">HTML Email</span>
-            <span class="stack-tag">SQL</span>
-          </div>
-          <a href="#" class="project-link">View Project →</a>
-        </div>
+
+        <button class="carousel-nav carousel-nav-right" id="carouselRight">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 18l6-6-6-6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
       </div>
     </section>
 
