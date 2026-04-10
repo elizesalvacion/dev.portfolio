@@ -23,14 +23,14 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
 
   const cards = Array.from(cluster.querySelectorAll(".diamond-card"));
   const destinations = {
-    tl: { top: 25, left: 30 },
-    tr: { top: 25, left: 200 } /* Changed from 210 */,
-    bl: { top: 202, left: 28 } /* Changed from 210 */,
-    br: { top: 202, left: 200 } /* Changed from 210 */,
+    tl: { top: 25, left: 20 },
+    tr: { top: 25, left: 210 } /* Changed from 210 */,
+    bl: { top: 205, left: 20 } /* Changed from 210 */,
+    br: { top: 205, left: 210 } /* Changed from 210 */,
   };
   const origin = {
-    top: 90,
-    left: 90,
+    top: 105,
+    left: 105,
   }; /* Changed from { top: 105, left: 105 } */
   let revealed = false;
 

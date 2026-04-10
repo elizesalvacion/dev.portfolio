@@ -363,7 +363,7 @@ section {
 }
 
 /* Pulse animations */
-/* @keyframes center-pulse {
+@keyframes center-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(5, 242, 219, 0.6);
   }
@@ -373,9 +373,9 @@ section {
   100% {
     box-shadow: 0 0 0 0 rgba(5, 242, 219, 0);
   }
-} */
+}
 
-/* @keyframes diamond-pulse {
+@keyframes diamond-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 0, 170, 0.966);
     border-color: rgba(5, 242, 219, 0.9);
@@ -388,7 +388,7 @@ section {
     box-shadow: 0 0 0 0 rgba(5, 242, 219, 0);
     border-color: rgba(5, 242, 219, 0.9);
   }
-} */
+}
 
 .diamond-cluster.revealed .diamond-card[data-slot="tl"] {
   animation: diamond-pulse 2.4s ease-in-out infinite 0s;
