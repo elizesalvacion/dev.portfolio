@@ -23,12 +23,15 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
 
   const cards = Array.from(cluster.querySelectorAll(".diamond-card"));
   const destinations = {
-    tl: { top: 0, left: 0 },
-    tr: { top: 0, left: 210 },
-    bl: { top: 210, left: -2 },
-    br: { top: 210, left: 210 },
+    tl: { top: 25, left: 30 },
+    tr: { top: 25, left: 200 } /* Changed from 210 */,
+    bl: { top: 202, left: 28 } /* Changed from 210 */,
+    br: { top: 202, left: 200 } /* Changed from 210 */,
   };
-  const origin = { top: 105, left: 105 };
+  const origin = {
+    top: 90,
+    left: 90,
+  }; /* Changed from { top: 105, left: 105 } */
   let revealed = false;
 
   // Set all cards to center, hidden, on load

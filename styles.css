@@ -257,7 +257,7 @@ section {
 .tag {
   font-size: 12px;
   padding: 5px 12px;
-  border-radius: 20px;
+  border-radius: 2px;
   border: 1px solid rgba(5, 242, 219, 0.3);
   color: var(--accent1);
   background: rgba(5, 242, 219, 0.06);
@@ -289,16 +289,16 @@ section {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 14px;
-  gap: 4px;
+  /* padding: 14px;
+  gap: 4px; */
 }
 
 /* Center trigger */
 .diamond-center {
   top: 50%;
   left: 50%;
-  margin-top: -65px;
-  margin-left: -65px;
+  margin-top: -55px; /* Changed from -65px */
+  margin-left: -55px; /* Changed from -65px */
   background: rgba(5, 242, 219, 0.06);
   border: 1.5px solid var(--accent1);
   z-index: 10;
@@ -363,7 +363,7 @@ section {
 }
 
 /* Pulse animations */
-@keyframes center-pulse {
+/* @keyframes center-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(5, 242, 219, 0.6);
   }
@@ -373,9 +373,9 @@ section {
   100% {
     box-shadow: 0 0 0 0 rgba(5, 242, 219, 0);
   }
-}
+} */
 
-@keyframes diamond-pulse {
+/* @keyframes diamond-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 0, 170, 0.966);
     border-color: rgba(5, 242, 219, 0.9);
@@ -388,7 +388,7 @@ section {
     box-shadow: 0 0 0 0 rgba(5, 242, 219, 0);
     border-color: rgba(5, 242, 219, 0.9);
   }
-}
+} */
 
 .diamond-cluster.revealed .diamond-card[data-slot="tl"] {
   animation: diamond-pulse 2.4s ease-in-out infinite 0s;
@@ -621,17 +621,19 @@ section {
   color: var(--accent2);
   font-weight: 500;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-.mini-diamond {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  margin-left: 5px;
+.toolkit-prompt-close::after {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
   background: rgba(5, 242, 219, 0.08);
   border: 1px solid var(--accent1);
   transform: rotate(45deg);
 }
-
 .toolkit-prompt-learn {
   font-size: 14px;
   letter-spacing: 0.12em;
@@ -825,18 +827,12 @@ footer {
 
   /* Toolkit Prompt - Move to top on mobile */
   .toolkit-prompt {
-    order: -2;
+    order: 2;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  .toolkit-prompt-close::after {
-    content: " ◆";
-    color: var(--accent1);
-    margin: 0 0.3rem;
   }
 
   .toolkit-prompt-learn {
@@ -903,9 +899,9 @@ footer {
     width: 100%;
     min-height: 0;
     order: 1;
-    opacity: 0;
+    opacity: 1;
     pointer-events: none;
-    position: absolute;
+    /* position: absolute; */
     transform: translateY(40px) scale(0.95);
     transition:
       opacity 0.6s cubic-bezier(0.77, 0, 0.18, 1),
@@ -1026,6 +1022,15 @@ footer {
   .toolkit-diamond {
     width: 80px;
     height: 80px;
+  }
+
+  .diamond {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    /* transform: rotate(45deg); */
+    cursor: pointer;
+    transition: none;
   }
   .toolkit-diamond-inner {
     font-size: 8px;
