@@ -47,7 +47,7 @@
   --accent1: #0a7a8f;
   --accent2: #d4007a;
 
-  --text1: #021a1c;
+  --text1: #241d1d;
   --text2: #d4007a;
 
   --border-subtle: rgba(10, 122, 143, 0.2);
@@ -61,8 +61,8 @@
 
   --project-gradient-start: rgba(10, 122, 143, 0.12);
   --project-gradient-end: rgba(212, 0, 122, 0.1);
-  --project-overlay-mid: rgba(200, 235, 238, 0.92);
-  --project-overlay-end: rgba(220, 245, 248, 0.88);
+  --project-overlay-mid: rgba(177, 249, 255, 0.89);
+  --project-overlay-end: rgba(183, 244, 252, 0.88);
 
   --hero-btn-primary-color: #ffffff;
   --theme-btn-bg-hover: rgba(10, 122, 143, 0.1);
@@ -528,12 +528,12 @@ section {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60%;
+  height: 70%;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    var(--project-overlay-mid) 40%,
-    var(--project-overlay-end) 100%
+    var(--project-overlay-mid) 25%,
+    var(--project-overlay-end) 50%
   );
   pointer-events: none;
 }
