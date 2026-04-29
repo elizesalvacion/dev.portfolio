@@ -1,3 +1,10 @@
+// ── Helper: read a CSS variable as a hex string ──
+function getCSSVar(name) {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+}
+
 // ── Theme Toggle ──
 const themeBtn = document.getElementById("themeBtn");
 let isLight = false;
@@ -15,7 +22,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   });
 });
 
-// ── Diamond Cluster ──
+// ── Diamond Cluster (About) ──
 (function () {
   const cluster = document.getElementById("diamondCluster");
   const trigger = document.getElementById("diamondTrigger");
@@ -24,17 +31,13 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   const cards = Array.from(cluster.querySelectorAll(".diamond-card"));
   const destinations = {
     tl: { top: 25, left: 20 },
-    tr: { top: 25, left: 210 } /* Changed from 210 */,
-    bl: { top: 205, left: 20 } /* Changed from 210 */,
-    br: { top: 205, left: 210 } /* Changed from 210 */,
+    tr: { top: 25, left: 210 },
+    bl: { top: 205, left: 20 },
+    br: { top: 205, left: 210 },
   };
-  const origin = {
-    top: 105,
-    left: 105,
-  }; /* Changed from { top: 105, left: 105 } */
+  const origin = { top: 105, left: 105 };
   let revealed = false;
 
-  // Set all cards to center, hidden, on load
   cards.forEach((card) => {
     card.style.top = origin.top + "px";
     card.style.left = origin.left + "px";
@@ -94,13 +97,20 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     ROWS = 9;
   const W = COLS * CELL,
     H = ROWS * CELL;
-  const ACCENT1 = "#05F2DB",
-    ACCENT2 = "#D8048D";
+
+  function getAccents() {
+    return {
+      ACCENT1: getCSSVar("--accent1") || "#05F2DB",
+      ACCENT2: getCSSVar("--accent2") || "#D8048D",
+    };
+  }
 
   function hexAlpha(hex, a) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
+    // handle both #rrggbb and shorthand
+    const full = hex.replace(/^#(.)(.)(.)$/, "#$1$1$2$2$3$3");
+    const r = parseInt(full.slice(1, 3), 16);
+    const g = parseInt(full.slice(3, 5), 16);
+    const b = parseInt(full.slice(5, 7), 16);
     return `rgba(${r},${g},${b},${a})`;
   }
 
@@ -117,7 +127,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
           dist,
           phase: dist * 0.45,
           speed: 0.0006 + Math.random() * 0.0002,
-          accent: Math.random() < 0.15 ? ACCENT2 : ACCENT1,
+          useAccent2: Math.random() < 0.15,
           dotChance: Math.random(),
         });
       }
@@ -139,9 +149,11 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   }
 
   function drawGrid(ctx, cells, corner, now) {
+    const { ACCENT1, ACCENT2 } = getAccents();
     ctx.clearRect(0, 0, W, H);
     const maxDist = Math.sqrt((COLS - 1) ** 2 + (ROWS - 1) ** 2);
     cells.forEach((cell) => {
+      const accent = cell.useAccent2 ? ACCENT2 : ACCENT1;
       const t = now * cell.speed + cell.phase;
       const pulse = (Math.sin(t) + 1) / 2;
       const edgePulse = (Math.sin(t * 0.5) + 1) / 2;
@@ -150,17 +162,17 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
       const proximity = 1 - cell.dist / maxDist;
       const fade = Math.pow(proximity, 1.6);
 
-      ctx.fillStyle = hexAlpha(cell.accent, fade * (0.08 + pulse * 0.22));
+      ctx.fillStyle = hexAlpha(accent, fade * (0.08 + pulse * 0.22));
       ctx.fillRect(x, y, CELL, CELL);
 
-      ctx.strokeStyle = hexAlpha(cell.accent, fade * (0.12 + edgePulse * 0.35));
+      ctx.strokeStyle = hexAlpha(accent, fade * (0.12 + edgePulse * 0.35));
       ctx.lineWidth = 0.75;
       ctx.strokeRect(x + 0.5, y + 0.5, CELL - 1, CELL - 1);
 
       if (cell.dist < 3.5) {
         const cs = 6,
           ba = fade * (0.3 + pulse * 0.5);
-        ctx.strokeStyle = hexAlpha(cell.accent, ba);
+        ctx.strokeStyle = hexAlpha(accent, ba);
         ctx.lineWidth = 1.2;
         [
           [0, cs, 0, 0, cs, 0],
@@ -177,7 +189,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
       }
 
       if (cell.dotChance > 0.7 && pulse > 0.6) {
-        ctx.fillStyle = hexAlpha(cell.accent, fade * (pulse - 0.6) * 2.2);
+        ctx.fillStyle = hexAlpha(accent, fade * (pulse - 0.6) * 2.2);
         ctx.beginPath();
         ctx.arc(x + CELL / 2, y + CELL / 2, 1.8, 0, Math.PI * 2);
         ctx.fill();
@@ -190,6 +202,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     setupCanvas("hero-grid-br", "br"),
   ].filter(Boolean);
   if (!grids.length) return;
+
   function animate(now) {
     grids.forEach((g) => drawGrid(g.ctx, g.cells, g.corner, now));
     requestAnimationFrame(animate);
@@ -199,22 +212,33 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
 
 // ── Cyberpunk Cursor + Grid Trail ──
 (function () {
-  const ACCENT1 = "#05F2DB",
-    ACCENT2 = "#D8048D";
   const GRID_SIZE = 25,
     TRAIL_DURATION = 800,
     MAX_TRAIL = 24;
 
+  function getAccents() {
+    return {
+      ACCENT1: getCSSVar("--accent1") || "#05F2DB",
+      ACCENT2: getCSSVar("--accent2") || "#D8048D",
+    };
+  }
+
   document.documentElement.style.cursor = "none";
 
-  // Custom cursor SVG
   const cursor = document.createElement("div");
   cursor.id = "cyb-cursor";
-  cursor.innerHTML = `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="4,4 4,22 10,16 14,24 17,23 13,15 22,15" fill="${ACCENT1}" opacity="0.95"/>
-    <polygon points="4,4 4,22 10,16 14,24 17,23 13,15 22,15" fill="none" stroke="${ACCENT2}" stroke-width="0.8" opacity="0.7"/>
-    <circle cx="4" cy="4" r="1.5" fill="${ACCENT2}"/>
-  </svg>`;
+
+  // Cursor SVG built dynamically so it can update on theme toggle
+  function updateCursorSVG() {
+    const { ACCENT1, ACCENT2 } = getAccents();
+    cursor.innerHTML = `<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="4,4 4,22 10,16 14,24 17,23 13,15 22,15" fill="${ACCENT1}" opacity="0.95"/>
+      <polygon points="4,4 4,22 10,16 14,24 17,23 13,15 22,15" fill="none" stroke="${ACCENT2}" stroke-width="0.8" opacity="0.7"/>
+      <circle cx="4" cy="4" r="1.5" fill="${ACCENT2}"/>
+    </svg>`;
+  }
+  updateCursorSVG();
+
   Object.assign(cursor.style, {
     position: "fixed",
     top: "0",
@@ -228,14 +252,13 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   });
   document.body.appendChild(cursor);
 
-  // Lagging ring
+  // Lagging ring — border color driven by CSS var via inline style update
   const ring = document.createElement("div");
   ring.id = "cyb-ring";
   Object.assign(ring.style, {
     position: "fixed",
     width: "36px",
     height: "36px",
-    border: `1px solid ${ACCENT1}`,
     borderRadius: "2px",
     top: "0",
     left: "0",
@@ -246,7 +269,21 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     transition: "opacity 0.15s ease",
     willChange: "transform",
   });
+
+  function updateRingBorder() {
+    ring.style.border = `1px solid ${getCSSVar("--accent1")}`;
+  }
+  updateRingBorder();
   document.body.appendChild(ring);
+
+  // Update cursor/ring colors when theme toggles
+  themeBtn.addEventListener("click", () => {
+    // Small delay so CSS vars have updated
+    setTimeout(() => {
+      updateCursorSVG();
+      updateRingBorder();
+    }, 50);
+  });
 
   const isTouchDevice =
     "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -256,7 +293,6 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     ring.style.display = "none";
   }
 
-  // Trail canvas
   const canvas = document.createElement("canvas");
   canvas.id = "cyb-canvas";
   Object.assign(canvas.style, {
@@ -284,7 +320,8 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     lastGy = -1;
 
   function hexToRgb(hex) {
-    return `${parseInt(hex.slice(1, 3), 16)},${parseInt(hex.slice(3, 5), 16)},${parseInt(hex.slice(5, 7), 16)}`;
+    const full = hex.replace(/^#(.)(.)(.)$/, "#$1$1$2$2$3$3");
+    return `${parseInt(full.slice(1, 3), 16)},${parseInt(full.slice(3, 5), 16)},${parseInt(full.slice(5, 7), 16)}`;
   }
 
   function drawFrame(now) {
@@ -343,7 +380,6 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   }
   requestAnimationFrame(drawFrame);
 
-  // Ring lerp
   let ringX = -200,
     ringY = -200;
   function lerpRing() {
@@ -364,6 +400,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
       lastGx = gx;
       lastGy = gy;
       if (trail.length >= MAX_TRAIL) trail.shift();
+      const { ACCENT1, ACCENT2 } = getAccents();
       trail.push({
         gx,
         gy,
@@ -388,6 +425,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     const cx = Math.floor(e.clientX / GRID_SIZE);
     const cy = Math.floor(e.clientY / GRID_SIZE);
     const now = performance.now();
+    const { ACCENT2 } = getAccents();
     [
       [-1, 0],
       [1, 0],
@@ -406,8 +444,6 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
 
 // ── Toolkit Diamond Cluster ──
 (function () {
-  const ACCENT1 = "#05F2DB",
-    ACCENT2 = "#D8048D";
   const GRID_SIZE = 25;
 
   const toolkitLayout = document.querySelector(".toolkit-layout");
@@ -421,24 +457,14 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   let activeCategory = null;
   let isMobile = window.innerWidth <= 640;
 
-  // Check if mobile view
   function checkMobile() {
     isMobile = window.innerWidth <= 640;
   }
-
   window.addEventListener("resize", checkMobile);
 
-  // Create burst effect on click
   function createBurst(x, y) {
-    const burstCanvas = document.getElementById("cyb-canvas");
-    if (!burstCanvas) return;
-
-    const ctx = burstCanvas.getContext("2d");
     const gx = Math.floor(x / GRID_SIZE);
     const gy = Math.floor(y / GRID_SIZE);
-    const now = performance.now();
-
-    // Create burst pattern
     const burstPattern = [
       [0, 0],
       [-1, 0],
@@ -454,19 +480,18 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
       [0, -2],
       [0, 2],
     ];
-
     burstPattern.forEach(([dx, dy], i) => {
       setTimeout(() => {
-        const trail = [];
-        const event = new CustomEvent("addTrailCell", {
-          detail: {
-            gx: gx + dx,
-            gy: gy + dy,
-            born: performance.now(),
-            color: ACCENT2,
-          },
-        });
-        window.dispatchEvent(event);
+        window.dispatchEvent(
+          new CustomEvent("addTrailCell", {
+            detail: {
+              gx: gx + dx,
+              gy: gy + dy,
+              born: performance.now(),
+              color: getCSSVar("--accent2"),
+            },
+          }),
+        );
       }, i * 25);
     });
   }
@@ -474,19 +499,13 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   diamonds.forEach((diamond) => {
     diamond.addEventListener("click", function (e) {
       const category = this.dataset.category;
-
-      // Create burst effect at click position
       const rect = this.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      createBurst(centerX, centerY);
+      createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
       if (isMobile) {
-        // Mobile behavior: Show content, hide cluster
         activeCategory = category;
         diamonds.forEach((d) => d.classList.remove("active"));
         this.classList.add("active");
-
         contents.forEach((c) => c.classList.remove("active"));
         const targetContent = document.querySelector(
           `.toolkit-content[data-content="${category}"]`,
@@ -497,19 +516,15 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
           toolkitLayout.classList.add("mobile-content-active");
         }
       } else {
-        // Desktop behavior: Toggle diamond and content
         if (activeCategory === category) {
-          // Deactivate if clicking the same diamond
           activeCategory = null;
           diamonds.forEach((d) => d.classList.remove("active"));
           contents.forEach((c) => c.classList.remove("active"));
           toolkitInfo.classList.remove("has-content");
         } else {
-          // Activate new diamond
           activeCategory = category;
           diamonds.forEach((d) => d.classList.remove("active"));
           this.classList.add("active");
-
           contents.forEach((c) => c.classList.remove("active"));
           const targetContent = document.querySelector(
             `.toolkit-content[data-content="${category}"]`,
@@ -523,12 +538,9 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     });
   });
 
-  // Go Back button functionality (mobile only)
   backButtons.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
-
-      // Reset everything
       activeCategory = null;
       diamonds.forEach((d) => d.classList.remove("active"));
       contents.forEach((c) => c.classList.remove("active"));
@@ -537,9 +549,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     });
   });
 
-  // Allow closing by clicking on the info panel when content is shown (desktop only)
   toolkitInfo.addEventListener("click", function (e) {
-    // Only close if clicking directly on the prompt area and on desktop
     if (
       !isMobile &&
       e.target.closest(".toolkit-prompt") &&
@@ -568,9 +578,7 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
   function updateCenterCard() {
     cards.forEach((card, index) => {
       card.classList.remove("center");
-      if (index === currentCenter) {
-        card.classList.add("center");
-      }
+      if (index === currentCenter) card.classList.add("center");
     });
   }
 
@@ -578,37 +586,26 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     const card = cards[index];
     if (card) {
       const cardWidth = card.offsetWidth;
-      const gap = 24; // 1.5rem
+      const gap = 24;
       const scrollPosition =
         (cardWidth + gap) * index - carousel.offsetWidth / 2 + cardWidth / 2;
-      carousel.scrollTo({
-        left: scrollPosition,
-        behavior: "smooth",
-      });
+      carousel.scrollTo({ left: scrollPosition, behavior: "smooth" });
       currentCenter = index;
       updateCenterCard();
     }
   }
 
   leftBtn.addEventListener("click", () => {
-    const nextIndex = currentCenter - 1;
-    // Loop to end if at beginning
-    scrollToCard(nextIndex < 0 ? totalCards - 1 : nextIndex);
+    scrollToCard(currentCenter - 1 < 0 ? totalCards - 1 : currentCenter - 1);
   });
-
   rightBtn.addEventListener("click", () => {
-    const nextIndex = currentCenter + 1;
-    // Loop to beginning if at end
-    scrollToCard(nextIndex >= totalCards ? 0 : nextIndex);
+    scrollToCard(currentCenter + 1 >= totalCards ? 0 : currentCenter + 1);
   });
 
-  // Mouse wheel horizontal scroll
   carousel.addEventListener("wheel", (e) => {
     if (e.deltaY !== 0) {
       e.preventDefault();
       carousel.scrollLeft += e.deltaY;
-
-      // Update center card based on scroll position
       const cardWidth = cards[0].offsetWidth;
       const gap = 24;
       const scrollCenter = carousel.scrollLeft + carousel.offsetWidth / 2;
@@ -624,15 +621,11 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     }
   });
 
-  // Click card to center it
   cards.forEach((card, index) => {
     card.addEventListener("click", (e) => {
-      if (!e.target.closest(".project-link")) {
-        scrollToCard(index);
-      }
+      if (!e.target.closest(".project-link")) scrollToCard(index);
     });
   });
 
-  // Initialize - start with first card centered
   scrollToCard(currentCenter);
 })();
